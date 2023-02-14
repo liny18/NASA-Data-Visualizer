@@ -2,29 +2,52 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var mongoose = require('mongoose');
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  const query = req.params.query;
+  const unsplashUrl = `https://api.unsplash.com/search/photos?query=${query}`;
+
+  fetch(unsplashUrl, {
+    headers: {
+      Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => res.json(data))
+    .catch((error) => console.error(error));
+});
+
+app.get('/', function(req, res){
+  const query = req.query.query;
+  const unsplashUrl = `https://api.unsplash.com/search/photos?query=${query}`;
+
+  fetch(unsplashUrl, {
+    headers: {
+      Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: "An error occurred while fetching data." });
+    }
+  );
+});
 
 // server route handler
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-// connect to mongodb
-var db = mongoose.connection;
-db.on('error', console.error);
-mongoose.connect('mongodb://localhost/mychat');
-
-// mongodb schemas
-var chatMessage = new mongoose.Schema({
-  username: String,
-  message: String
-});
-var Message = mongoose.model('Message', chatMessage);
-
 // user connected even handler
 io.on('connection', function(socket){
   
-  // log & brodcast connect event
+  // log & broadcast connect event
   console.log('a user connected');
   
   // log disconnect event
@@ -50,6 +73,8 @@ io.on('connection', function(socket){
       }
     })
   });
+
+  
 });
 
 // start server
