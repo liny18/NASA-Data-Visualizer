@@ -19,8 +19,8 @@ export const Timer = ( props ) => {
 
   return (
       <div className="timer">
-        <h2>Player: { name }</h2>
-        <p>Countdown: { secondsLeft }</p>
+        <h2 className='text-xl'>Countdown: { secondsLeft }</h2>
+        <p>Player: { name }</p>
       </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import { Form } from "./Components/Form";
 import { Picker } from "./Components/Picker";
+import { Switcher } from "./Components/Switcher";
 import "./App.css";
 
 export const TimerContext = createContext({
@@ -16,6 +17,11 @@ function App() {
   const [started, setStarted] = useState(false);
   const [end, setEnd] = useState(false);
   const [score, setScore] = useState();
+  const [highestScore, setHighestScore] = useState( () => {
+    const score = localStorage.getItem("highestScore");
+    const name = localStorage.getItem("name");
+    return { score, name }; 
+  });
   const [sketchPickerColor, setSketchPickerColor] = useState({
     r: 241,
     g: 112,
@@ -27,6 +33,14 @@ function App() {
     g: 0,
     b: 0,
   });
+
+  useEffect(() => {
+    if (score > highestScore.score) { 
+      setHighestScore({ score, name });
+      localStorage.setItem("highestScore", score);
+      localStorage.setItem("name", name);
+    }
+  }, [score]);
 
   const calculateScore = () => {
     const r1 = borderColor.r;
@@ -65,8 +79,9 @@ function App() {
   return (
     <>
       <TimerContext.Provider value={{ secondsLeft, setSecondsLeft, setEnd }}>
+        <Switcher />
         {!end ? (
-          <div className="App">
+          <div className="App text-slate-900 dark:text-slate-100">
             <h1 className="text-4xl text-center mb-3">
               {!started ? "Hex!" : "Match border color!"}
             </h1>
@@ -78,7 +93,9 @@ function App() {
                       borderColor: `rgb(${borderColor.r},${borderColor.g},${borderColor.b})`,
                     }
                   : {
-                      borderColor: `rgb(226,232,240)`,
+                      // borderColor: `rgb(226,232,240)`,
+                      // borderColor: `rgb(241,245,249)`,
+                      borderColor: `rgb(203,213,225)`,
                     }
               }
             >
@@ -101,11 +118,14 @@ function App() {
             </div>
           </div>
         ) : (
-          <div className="App">
-            <h1 className="text-2xl text-center mb-3">Game Over</h1>
+          <div className="App text-slate-900 dark:text-slate-100">
+            <h1 className="text-4xl text-center mb-3">Game Over</h1>
             <h2 className="text-2xl text-center mb-3">Your Score: {score}</h2>
+            <h2 className="text-2xl text-center mb-3">
+              Highest Score: {highestScore.score} by {highestScore.name}
+            </h2>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded dark:bg-gray-800 dark:text-gray-200"
               onClick={() => {
                 setStarted(false);
                 setEnd(false);
