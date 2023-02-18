@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { SketchPicker } from "react-color";
+import "../App.css";
 
 export const Picker = (props) => {
   const { sketchPickerColor, setSketchPickerColor, setEnd } = props;
@@ -13,7 +13,7 @@ export const Picker = (props) => {
       <button onClick={handleSubmit} className="rounded-md m-2 w-full p-3" style={{ backgroundColor: `rgba(${r},${g},${b},${a})` }}>
         Submit
       </button>
-      <SketchPicker
+      <SketchPicker className="sketch-picker bg-gray-100 dark:bg-gray-800"
         onChange={(color) => {
           setSketchPickerColor(color.rgb);
         }}
