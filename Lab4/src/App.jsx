@@ -18,8 +18,8 @@ function App() {
   const [end, setEnd] = useState(false);
   const [score, setScore] = useState("");
   const [highestScore, setHighestScore] = useState(() => {
-    const score = localStorage.getItem("highestScore");
-    const name = localStorage.getItem("name");
+    const score = localStorage.getItem("highestScore") || 0;
+    const name = localStorage.getItem("name") || "";
     return { score, name };
   });
   const [sketchPickerColor, setSketchPickerColor] = useState({
@@ -45,10 +45,6 @@ function App() {
   const separateWithComma = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
-
-  // useEffect(() => {
-  //   separateWithComma(score);
-  // }, [score]);
 
   const calculateScore = () => {
     const r1 = borderColor.r;
