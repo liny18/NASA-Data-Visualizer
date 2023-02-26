@@ -6,7 +6,7 @@ import './App.css'
 
 function App() {
   return (
-    <div className="App overflow-x-hidden scroll-smooth">
+    <div className="App overflow-x-hidden scroll-smooth bg-gray-50">
       <Layout>
           <Routes>
             <Route path='/' element={<Dashboard />} />
