@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export const Header = () => {
   return (
-    <div className='header-container flex justify-between items-center h-15 border-gray-800 border-[2px]'>
+    <div className='header-container flex justify-between items-center h-15 border-gray-800 border-[2px] absolute bg-gray-50 w-full z-10'>
       <div className='nav-container flex justify-between items-center w-5/6 py-5 px-10 border-gray-800 border-r-[2px]'>
         <Link to='/'>
         <div className='logo-container flex items-center bg-amber-200 border-2 border-gray-800 shadow-[7px_7px_2px_0px_#fcd34d] p-1 hover:bg-amber-300'>

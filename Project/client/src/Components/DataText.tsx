@@ -2,7 +2,7 @@ import React from 'react'
 
 export const DataText = () => {
   return (
-    <div className="DataText col-span-1">
+    <div className="DataText col-span-1 lg:h-full sm:h-1/2">
       <div className="DataText__header">
         <h2 className="DataText__title">
           Some City, CT
