@@ -13,7 +13,7 @@ export const DataMap = () => {
   });
 
   return (
-    <div className="data-map col-span-2">
+    <div className="data-map col-span-2 lg:h-full sm:h-1/2">
       <h1>Map</h1>
       {loadError && <div>Map cannot be loaded right now, sorry.</div>}
       {isLoaded && <GoogleMap

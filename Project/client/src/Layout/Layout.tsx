@@ -11,7 +11,7 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className='layout-container flex flex-col w-full h-screen bg-slate-50'>
       <Header />
-      <main className='main-container border-gray-800 border-[2px] px-10 justify-center items-center'>
+      <main className='main-container border-gray-800 border-[2px] px-10 justify-center items-center mt-24'>
         {/* <Hero /> */}
         {children}
       </main>

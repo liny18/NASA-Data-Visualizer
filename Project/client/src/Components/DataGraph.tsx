@@ -24,7 +24,7 @@ export const DataGraph = () => {
     title: 'Wind Speed from 2020 to 2021',
     curveType: 'function',
     legend: { position: 'bottom' },
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8fafc',
     hAxis: {
       title: 'Year',
       titleTextStyle: {
@@ -36,11 +36,11 @@ export const DataGraph = () => {
       titleTextStyle: {
         color: '#333'
       }
-    }
+    },
   };
 
   return (
-    <div className="data-graph col-span-1">
+    <div className="data-graph col-span-1 lg:h-full sm:h-1/2">
       <h1>Graph</h1>
       <Chart
         width={'100%'}
