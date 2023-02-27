@@ -2,6 +2,7 @@ import React, { ReactNode} from 'react'
 import { Sidebar } from '../Components/Sidebar'
 import { Header } from '../Components/Header'
 import { Footer } from '../Components/Footer'
+import explore from '../assets/undraw_mobile_user_re_xta4.svg'
 
 type LayoutProps = {
   children: ReactNode;
