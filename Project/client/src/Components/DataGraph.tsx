@@ -40,7 +40,7 @@ export const DataGraph = () => {
   };
 
   return (
-    <div className="data-graph col-span-1 lg:h-full sm:h-1/2">
+    <div className="data-graph col-span-1 lg:h-full sm:h-1/2 bg-red-100 p-2 shadow-[6px_6px_2px_0px_#fca5a5] border-2 border-red-200 rounded-3xl">
       <h1>Graph</h1>
       <Chart
         width={'100%'}

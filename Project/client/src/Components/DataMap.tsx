@@ -13,11 +13,11 @@ export const DataMap = () => {
   });
 
   return (
-    <div className="data-map col-span-2 lg:h-full sm:h-1/2">
+    <div className="data-map col-span-2 lg:h-full sm:h-1/2 bg-emerald-100 p-2 shadow-[6px_6px_2px_0px_#6ee7b7] border-2 border-emerald-200 rounded-3xl ">
       <h1>Map</h1>
       {loadError && <div>Map cannot be loaded right now, sorry.</div>}
       {isLoaded && <GoogleMap
-        mapContainerStyle={{ width: '100%', height: '100%' }}
+        mapContainerStyle={{ width: '100%', height: '93%' }}
         zoom={8}
         center={{ lat:  41.4790845, lng: -72.749954 }}
       >

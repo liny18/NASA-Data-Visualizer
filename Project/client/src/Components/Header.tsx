@@ -9,7 +9,7 @@ export const Header = () => {
     <div className='header-container flex justify-between items-center h-15 border-gray-800 border-[2px] absolute bg-gray-50 w-full z-10'>
       <div className='nav-container flex justify-between items-center w-5/6 py-5 px-10 border-gray-800 border-r-[2px]'>
         <Link to='/'>
-        <div className='logo-container flex items-center bg-amber-200 border-2 border-gray-800 shadow-[7px_7px_2px_0px_#fcd34d] p-1 hover:bg-amber-300'>
+        <div className='logo-container flex items-center bg-amber-100 border-2 border-amber-200 shadow-[7px_7px_2px_0px_#fcd34d] p-1 hover:bg-amber-200 rounded-3xl'>
           <img src={logo} alt='NASA Logo' className='w-[50px] h-[42px]' />
           <div className='logo-text flex flex-col justify-center ml-1'>
             <h1 className='text-md font-bold'>NASA</h1>

@@ -3,7 +3,7 @@ import { DataGraph } from './DataGraph'
 import { DataMap } from './DataMap'
 import { DataText } from './DataText'
 import { DataList } from './DataList'
-import explore from '../assets/undraw_explore_re_8l4v.svg'
+import explore from '../assets/undraw_statistics_re_kox4.svg'
 
 export const Data = () => {
   return (
