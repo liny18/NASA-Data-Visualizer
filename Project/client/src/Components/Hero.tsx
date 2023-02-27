@@ -1,6 +1,7 @@
 import React from 'react'
 import { TbWindmill } from 'react-icons/tb'
 
+
 interface HeroProps {
   onButtonClick: () => void
 }
@@ -8,6 +9,7 @@ interface HeroProps {
 export const Hero = ({ onButtonClick }: HeroProps) => {
   return (
     <div className="hero-container lg:flex-row sm:flex sm:flex-col lg:justify-between sm:justify-center items-center sm:gap-10 border-b-2 border-gray-800 h-[800px] mt-10">
+      {/* <img className="hero-image lg:block lg:absolute top-28 left-0 h-1/4 sm:hidden" src={explore} alt="hero" /> */}
       <div className="hero-text flex flex-col justify-center items-start gap-10">
         <h1 className="text-5xl font-extrabold">
           Explore Wind Energy Potential in Connecticut
