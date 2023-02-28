@@ -12,11 +12,11 @@ export const Data = () => {
           Explore the data below to learn more about wind energy in Connecticut.
         </h1>
       </div>
-      <div className="data-item z-10 h-2/5 gap-7 sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-3">
+      <div className="data-item z-10 h-2/5 w-full gap-7 sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-3">
         <DataMap />
         <DataText />
       </div>
-      <div className="data-item z-10 h-2/5 gap-7 sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-2">
+      <div className="data-item z-10 h-2/5 w-full gap-7 sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-2">
         <DataList />
         <DataGraph />
       </div>

@@ -1,60 +1,91 @@
-import React from 'react'
-import './DataList.css'
+import React from "react";
 
 export const DataList = () => {
-  
+  const janToJulData = [
+    ["Jan", "0.99 m/s", "3 m/s", "5.25 m/s"],
+    ["Feb", "1.04 m/s", "2.96 m/s", "5.18 m/s"],
+    ["Mar", "0.91 m/s", "3.11 m/s", "5.55 m/s"],
+    ["Apr", "0.67 m/s", "3 m/s", "5.42 m/s"],
+    ["May", "0.45 m/s", "2.43 m/s", "4.59 m/s"],
+    ["Jun", "0.36 m/s", "1.96 m/s", "3.81 m/s"],
+    ["Jul", "0.39 m/s", "1.86 m/s", "3.65 m/s"],
+  ];
+
+  const augToAnnData = [
+    ["Aug", "0.45 m/s", "1.98 m/s", "3.82 m/s"],
+    ["Sep", "0.56 m/s", "2.26 m/s", "4.37 m/s"],
+    ["Oct", "0.63 m/s", "2.41 m/s", "4.45 m/s"],
+    ["Nov", "0.68 m/s", "2.57 m/s", "4.83 m/s"],
+    ["Dec", "0.77 m/s", "2.8 m/s", "5.12 m/s"],
+    ["Avg", "0.66 m/s", "2.53 m/s", "4.67 m/s"],
+  ];
+
   return (
-    <div className="DataList col-span-1 lg:h-full sm:h-1/2 bg-sky-100 p-2 shadow-[6px_6px_2px_0px_#7dd3fc] border-2 border-sky-200 rounded-3xl">
-    <div className="DataList__header">
-      <h2 className="DataList__title">
-        Air Temperatures
-      </h2>
-      <h3>
-        8-day forecast
-      </h3>
-      <table>
-        <tr>
-        <th className="DataList__item__label">Sat, Mar 04</th>
-        <th className="DataList__item__label2">40ºF/29ºF</th>
-        <th className="DataList__item__label3">moderate rain</th>
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Sun, Mar 05</th>
-        <th className="DataList__item__label2">40ºF/23ºF</th>
-        <th className="DataList__item__label3">overcast clouds</th> 
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Mon, Mar 06</th>
-        <th className="DataList__item__label2">43ºF/27ºF</th>
-        <th className="DataList__item__label3">overcast clouds</th>
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Tue, Mar 07</th>
-        <th className="DataList__item__label2">45ºF/29ºF</th>
-        <th className="DataList__item__label3">sunny</th>
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Wed, Mar 08</th>
-        <th className="DataList__item__label2">40ºF/21ºF</th>
-        <th className="DataList__item__label3">overcast clouds</th>
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Thu, Mar 09</th>
-        <th className="DataList__item__label2">38ºF/25ºF</th>
-        <th className="DataList__item__label3">rain and snow</th>
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Fri, Mar 10</th>
-        <th className="DataList__item__label2">39ºF/27ºF</th>
-        <th className="DataList__item__label3">overcast clouds</th>
-        </tr>
-        <tr>
-        <th className="DataList__item__label">Sat, Mar 11</th>
-        <th className="DataList__item__label2">43ºF/28ºF</th>
-        <th className="DataList__item__label3">rain and snow</th>
-        </tr>
-      </table>
+    <div className="DataList col-span-1 flex w-full gap-1 rounded-3xl border-2 border-sky-200 bg-sky-100 p-2 shadow-[6px_6px_2px_0px_#7dd3fc] sm:h-1/2 lg:h-full">
+      <div className="DataList__header">
+        <div className="DataList__table">
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Month</th>
+                <th className="px-4 py-2">Wind at 2 meters</th>
+                <th className="px-4 py-2">Wind at 10 meters</th>
+                <th className="px-4 py-2">Wind at 50 meters</th>
+              </tr>
+            </thead>
+            <tbody>
+              {janToJulData.map((row, index) => {
+                return (
+                  <tr key={index}>
+                    {row.map((cell, index) => {
+                      return (
+                        <td
+                          key={index}
+                          className="border border-gray-800 px-4 py-2"
+                        >
+                          {cell}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="DataList__header">
+        <div className="DataList__table">
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Month</th>
+                <th className="px-4 py-2">Wind at 2 meters</th>
+                <th className="px-4 py-2">Wind at 10 meters</th>
+                <th className="px-4 py-2">Wind at 50 meters</th>
+              </tr>
+            </thead>
+            <tbody>
+              {augToAnnData.map((row, index) => {
+                return (
+                  <tr key={index}>
+                    {row.map((cell, index) => {
+                      return (
+                        <td
+                          key={index}
+                          className="border border-gray-800 px-4 py-2"
+                        >
+                          {cell}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-  )
-}
+  );
+};
