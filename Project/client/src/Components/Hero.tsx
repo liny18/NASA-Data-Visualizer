@@ -1,41 +1,38 @@
-import React from 'react'
-import { TbWindmill } from 'react-icons/tb'
-import explore from '../assets/undraw_mobile_user_re_xta4.svg'
-
-
+import React from "react";
+import { TbWindmill } from "react-icons/tb";
 interface HeroProps {
-  onButtonClick: () => void
+  onButtonClick: () => void;
 }
 
 export const Hero = ({ onButtonClick }: HeroProps) => {
   return (
-    <div className="hero-container lg:flex-row sm:flex sm:flex-col lg:justify-between sm:justify-center items-center sm:gap-10 border-b-2 border-gray-800 h-[800px] mt-10" style={
-      {
-        backgroundImage: `url(${explore})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover'
-    }
-    }>
-      {/* <img className="hero-image lg:block lg:absolute top-28 left-0 h-1/4 sm:hidden" src={explore} alt="hero" /> */}
-      <div className="hero-text flex flex-col justify-center items-start gap-10">
+    <div className="hero-container relative mt-10 h-[800px] items-center border-b-2 border-gray-800 sm:flex sm:flex-col sm:justify-center sm:gap-10 lg:flex-row lg:justify-between">
+      <div className="hero-text relative z-10 flex flex-col items-start justify-center gap-10">
         <h1 className="text-5xl font-extrabold">
           Explore Wind Energy Potential in Connecticut
         </h1>
         <p>
-          Our website helps you visualize the wind pattern and temperature of locations in Connecticut, powered by <a className="underline italic font-semibold" href='https://power.larc.nasa.gov/' target={'_blank'}>NASA's Power API</a>.
+          Our website helps you visualize the wind pattern and temperature of
+          locations in Connecticut, powered by{" "}
+          <a
+            className="rounded-3xl border-2 border-orange-200 bg-orange-100 p-2 font-semibold italic underline shadow-[5px_5px_2px_0px_#fdba74] hover:bg-orange-200"
+            href="https://power.larc.nasa.gov/"
+            target={"_blank"}
+          >
+            NASA's Power API.
+          </a>
         </p>
         <button
-          className="bg-red-100 p-2 shadow-[6px_6px_2px_0px_#fca5a5] border-2 border-red-200 hover:bg-red-200 rounded-3xl"
+          className="w-1/3 rounded-3xl border-2 border-red-200 bg-red-100 p-3 shadow-[5px_5px_2px_0px_#fca5a5] hover:bg-red-200"
           onClick={onButtonClick}
         >
           <h1 className="text-lg font-semibold">Get Started</h1>
         </button>
       </div>
 
-      <div className="hero-image flex flex-col justify-center items-center bg-sky-100 shadow-[6px_6px_2px_0px_#7dd3fc] border-2 border-sky-200 py-16 px-20 rounded-3xl">
-        <div className="hero-image-text flex flex-row justify-center items-center gap-5 mb-5">
-          <TbWindmill className="w-20 h-20" />
+      <div className="hero-image relative z-10 flex flex-col items-center justify-center rounded-3xl border-2 border-sky-200 bg-sky-100 py-16 px-20 shadow-[6px_6px_2px_0px_#7dd3fc]">
+        <div className="hero-image-text mb-5 flex flex-row items-center justify-center gap-5">
+          <TbWindmill className="h-20 w-20" />
           <h1 className="text-2xl font-semibold">
             Historical Wind Data In Connecticut
           </h1>
@@ -46,4 +43,3 @@ export const Hero = ({ onButtonClick }: HeroProps) => {
     </div>
   );
 };
-
