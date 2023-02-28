@@ -6,7 +6,7 @@ interface HeroProps {
 
 export const Hero = ({ onButtonClick }: HeroProps) => {
   return (
-    <div className="hero-container relative mt-10 h-[800px] items-center border-b-2 border-gray-800 sm:flex sm:flex-col sm:justify-center sm:gap-10 lg:flex-row lg:justify-between">
+    <div className="hero-container relative h-[800px] items-center border-b-2 border-gray-800 sm:flex sm:flex-col sm:justify-center sm:gap-10 lg:flex-row lg:justify-between">
       <div className="hero-text relative z-10 flex flex-col items-start justify-center gap-10">
         <h1 className="text-5xl font-extrabold">
           Explore Wind Energy Potential in Connecticut
