@@ -21,7 +21,7 @@ export const DataList = () => {
   ];
 
   return (
-    <div className="DataList col-span-1 flex w-full gap-1 rounded-3xl border-2 border-sky-200 bg-sky-100 p-2 shadow-[6px_6px_2px_0px_#7dd3fc] sm:h-1/2 lg:h-full">
+    <div className="DataList col-span-1 flex h-full w-full gap-1 overflow-x-clip overflow-y-scroll rounded-3xl border-2 border-sky-200 bg-sky-100 shadow-[6px_6px_2px_0px_#7dd3fc] sm:flex-col sm:items-center sm:p-0 lg:flex-row lg:items-start lg:p-2">
       <div className="DataList__header">
         <div className="DataList__table">
           <table className="table-auto">

@@ -46,7 +46,7 @@ export const DataGraph = () => {
   };
 
   return (
-    <div className="data-graph col-span-1 w-full rounded-3xl border-2 border-red-200 bg-red-100 p-2 shadow-[6px_6px_2px_0px_#fca5a5] sm:h-1/2 lg:h-full">
+    <div className="data-graph col-span-1 h-full w-full rounded-3xl border-2 border-red-200 bg-red-100 p-2 shadow-[6px_6px_2px_0px_#fca5a5]">
       <div style={chartContainerStyle}>
         <Chart
           width={"100%"}
