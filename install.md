@@ -13,7 +13,7 @@ Ensure you have the following software installed on your system:
 Installation:
 
     1.Clone the repository (skip this step if you're not using Git):
-    git clone [https://github.com/yourusername/vite-mern-stack.git](https://github.com/RPI-ITWS/ITWS4500-S23-fluffyBarnacles)
+    git clone https://github.com/RPI-ITWS/ITWS4500-S23-fluffyBarnacles
     cd into the right directory
     Alternatively, download the repository as a ZIP file and extract it.
 
