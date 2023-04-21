@@ -54,28 +54,29 @@
 //   );
 // }
 
-import React, { useEffect } from 'react';
-import mapboxgl from 'mapbox-gl';
+import React, { useEffect } from "react";
+import mapboxgl from "mapbox-gl";
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ';
+mapboxgl.accessToken =
+  "pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ";
 
 export const DataMap = () => {
   useEffect(() => {
     const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v11',
+      container: "map",
+      style: "mapbox://styles/mapbox/streets-v11",
       center: [-72.699997, 41.599998],
-      zoom: 7
+      zoom: 7,
     });
 
-    map.on('style.load', function () {
-      map.on('click', function (e) {
+    map.on("style.load", function () {
+      map.on("click", function (e) {
         var coordinates = e.lngLat;
         new mapboxgl.Popup()
           .setLngLat(coordinates)
-          .setHTML('you clicked here: <br/>' + coordinates)
+          .setHTML("you clicked here: <br/>" + coordinates)
           .addTo(map);
-          console.log(coordinates);
+        console.log(coordinates);
       });
     });
 
@@ -83,7 +84,11 @@ export const DataMap = () => {
     return () => map.remove();
   }, []);
 
-  return <div id="map" style={{ width: '100%', height: '200px' }} />;
+  return (
+    <div className="data-map col-span-2 h-full rounded-3xl border-2 border-emerald-200 bg-emerald-100 p-2 shadow-[6px_6px_2px_0px_#6ee7b7] ">
+      <div id="map" className="map-container h-full w-full"></div>
+    </div>
+  );
 };
 
 export default DataMap;

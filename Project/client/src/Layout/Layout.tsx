@@ -9,7 +9,7 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <div
-      className="layout-container flex h-full w-full flex-col"
+      className="layout-container flex h-screen w-full flex-col"
       style={{
         position: "relative",
       }}
