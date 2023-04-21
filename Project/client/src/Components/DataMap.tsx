@@ -75,6 +75,7 @@ export const DataMap = () => {
           .setLngLat(coordinates)
           .setHTML('you clicked here: <br/>' + coordinates)
           .addTo(map);
+          console.log(coordinates);
       });
     });
 
