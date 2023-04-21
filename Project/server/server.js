@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,26 +8,68 @@ const API = '4ebc829af5f9613ca836a63fa7f4733b';
 
 app.use(express.json());
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
-app.get('/api/loc/:lat/:long', async (req, res) => {
-    const lat = req.params.lat;
-    const long = req.params.long;
-    const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&limit=1&appid=${API}`;
-
-    fetch(url)
-        .then((result) => result.json())
-        .then((final) => res.status(200).send(final));
+const uri =
+    'mongodb+srv://admin:admin@cluster0.5stqqzx.mongodb.net/?retryWrites=true&w=majority';
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
 });
 
-app.get('/api/nasa/:lat/:long/:start/:end', async (req, res) => {
-    const lat = req.params.lat;
-    const long = req.params.long;
-    const start = req.params.start;
-    const end = req.params.end;
-    const url = `https://power.larc.nasa.gov/api/application/windrose/point?start=${start}&end=${end}&latitude=${lat}&longitude=${long}`;
+//  ----------------------------------------------------------------------------
 
-    fetch(url)
+app.listen(port, () => console.log(`Listening on port ${port}`));
+
+//  ----------------------------------------------------------------------------
+
+const getNASAData = (start, end, lat, long) => {
+    const url = `https://power.larc.nasa.gov/api/temporal/climatology/point?start=${start}&end=${end}&latitude=${lat}&longitude=${long}&community=re&parameters=WS50M&format=json&header=true`;
+
+    let res = fetch(url)
         .then((result) => result.json())
-        .then((final) => res.status(200).send(final));
+        .then((final) => final.properties.parameter.WS50M);
+
+    return res;
+};
+
+const getCityLocation = (name) => {
+    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${name},CT,US&appid=${API}`;
+
+    let res = fetch(url)
+        .then((result) => result.json())
+        .then((final) => final[0]);
+
+    return res;
+};
+
+app.get('/api/loc/:name', async (req, res) => {
+    try {
+        await client.connect();
+
+        const collection = client.db('NASA').collection('Cities');
+
+        const cname = req.params.name.toLocaleLowerCase();
+
+        if (cname) {
+            const city = await collection.findOne({ name: cname });
+
+            if (city) {
+                res.status(200).json(city);
+            } else {
+                let data = await getCityLocation(cname);
+
+                let lat = data.lat;
+                let long = data.lon;
+
+                let nasa = await getNASAData(2019, 2020, lat, long);
+                
+                await collection.insertOne({ name: cname, data: nasa });
+                res.status(200).json({ name: cname, data: nasa })
+            }
+        }
+    } catch (e) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        await client.close();
+    }
 });
