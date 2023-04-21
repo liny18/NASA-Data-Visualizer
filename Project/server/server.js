@@ -48,7 +48,7 @@ app.get('/api/loc/:name', async (req, res) => {
 
         const collection = client.db('NASA').collection('Cities');
 
-        const cname = req.params.name;
+        const cname = req.params.name.toLocaleLowerCase();
 
         if (cname) {
             const city = await collection.findOne({ name: cname });
@@ -62,8 +62,6 @@ app.get('/api/loc/:name', async (req, res) => {
                 let long = data.lon;
 
                 let nasa = await getNASAData(2019, 2020, lat, long);
-
-                console.log(nasa)
                 
                 await collection.insertOne({ name: cname, data: nasa });
                 res.status(200).json({ name: cname, data: nasa })
