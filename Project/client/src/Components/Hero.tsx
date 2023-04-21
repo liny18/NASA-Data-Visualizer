@@ -1,5 +1,6 @@
 import React from "react";
 import { TbWindmill } from "react-icons/tb";
+import explore from "../assets/undraw_explore_re_8l4v.svg";
 interface HeroProps {
   onButtonClick: () => void;
 }
@@ -40,6 +41,18 @@ export const Hero = ({ onButtonClick }: HeroProps) => {
         <p className="mb-1">Avg Wind Speed: 5.2 m/s</p>
         <p className="mb-1">Avg Temperature: 20.2 C</p>
       </div>
+      <div
+        className="bg-image absolute inset-0"
+        style={{
+          position: "absolute",
+          backgroundImage: `url(${explore})`,
+          // backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center 150px",
+          // backgroundSize: "contain",
+          opacity: 0.5,
+        }}
+      ></div>
     </div>
   );
 };
