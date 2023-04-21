@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { Header } from "../Components/Header";
 import { Footer } from "../Components/Footer";
-import explore from "../assets/undraw_explore_re_8l4v.svg";
 
 type LayoutProps = {
   children: ReactNode;
@@ -20,18 +19,6 @@ export const Layout = ({ children }: LayoutProps) => {
         {children}
       </main>
       <Footer />
-      <div
-        className="bg-image absolute inset-0"
-        style={{
-          position: "absolute",
-          backgroundImage: `url(${explore})`,
-          backgroundAttachment: "fixed",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center 150px",
-          backgroundSize: "contain",
-          opacity: 0.5,
-        }}
-      ></div>
     </div>
   );
 };

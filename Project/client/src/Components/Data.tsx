@@ -13,8 +13,8 @@ export const Data = () => {
         </h1>
       </div>
       <div className="data-item z-10 h-2/5 w-full gap-7 sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-3">
-        <DataMap />
         <DataText />
+        <DataMap />
       </div>
       <div className="data-item z-10 h-2/5 w-full gap-7 sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-2">
         <DataGraph />
