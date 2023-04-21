@@ -30,26 +30,59 @@
 //   );
 // };
 
-import Map, { GeolocateControl } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+// import Map, { GeolocateControl } from "react-map-gl";
+// import "mapbox-gl/dist/mapbox-gl.css";
 
-export const DataMap  = () => {
-  return (
-    <div>
-      <Map
-        mapboxAccessToken="pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ"
-        initialViewState={{
-          longitude: -72.699997,
-          latitude: 41.599998,
-          zoom: 7,
-        }}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
-      >
-        <GeolocateControl
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-        />
-      </Map>
-    </div>
-  );
-}
+// export const DataMap  = () => {
+//   return (
+//     <div>
+//       <Map
+//         mapboxAccessToken="pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ"
+//         initialViewState={{
+//           longitude: -72.699997,
+//           latitude: 41.599998,
+//           zoom: 7,
+//         }}
+//         mapStyle="mapbox://styles/mapbox/streets-v11"
+//       >
+//         <GeolocateControl
+//           positionOptions={{ enableHighAccuracy: true }}
+//           trackUserLocation={true}
+//         />
+//       </Map>
+//     </div>
+//   );
+// }
+
+import React, { useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
+
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ';
+
+export const DataMap = () => {
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-72.699997, 41.599998],
+      zoom: 7
+    });
+
+    map.on('style.load', function () {
+      map.on('click', function (e) {
+        var coordinates = e.lngLat;
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML('you clicked here: <br/>' + coordinates)
+          .addTo(map);
+      });
+    });
+
+    // Clean up
+    return () => map.remove();
+  }, []);
+
+  return <div id="map" style={{ width: '100%', height: '200px' }} />;
+};
+
+export default DataMap;
