@@ -26,40 +26,6 @@ export const DataList = () => {
   };
 
   return (
-    // <div className="DataList col-span-1 flex h-full w-full gap-1 overflow-scroll rounded-3xl border-2 border-sky-200 bg-sky-100 shadow-[6px_6px_2px_0px_#7dd3fc] sm:flex-col sm:items-center sm:p-0">
-    //   <div className="DataList__header">
-    //     <div className="DataList__table">
-    //       <table className="table-auto">
-    //         <thead>
-    //           <tr>
-    //             <th className="px-4 py-2">Month</th>
-    //             <th className="px-4 py-2">Wind at 2 meters</th>
-    //             <th className="px-4 py-2">Wind at 10 meters</th>
-    //             <th className="px-4 py-2">Wind at 50 meters</th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {Data.map((row, index) => {
-    //             return (
-    //               <tr key={index}>
-    //                 {row.map((cell, index) => {
-    //                   return (
-    //                     <td
-    //                       key={index}
-    //                       className="border border-gray-800 px-4 py-2"
-    //                     >
-    //                       {cell}
-    //                     </td>
-    //                   );
-    //                 })}
-    //               </tr>
-    //             );
-    //           })}
-    //         </tbody>
-    //       </table>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="DataList col-span-1 flex h-full w-full gap-1 overflow-scroll rounded-3xl border-2 border-sky-200 bg-sky-100 shadow-[6px_6px_2px_0px_#7dd3fc] sm:flex-col sm:items-center sm:p-0">
       <table className="w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
@@ -67,20 +33,20 @@ export const DataList = () => {
             {Data.headers.map((header, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
               >
                 {header}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 bg-white">
           {Data.rows.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                  className="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
                 >
                   {cell}
                 </td>
