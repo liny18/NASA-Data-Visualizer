@@ -1,10 +1,9 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const router = express.Router();
-const API = '4ebc829af5f9613ca836a63fa7f4733b';
+const GEOCODING_API_KEY = '8a44d4ca25a10c31120e4a6965fdb0d0';
 
 app.use(express.json());
 
@@ -16,58 +15,45 @@ const client = new MongoClient(uri, {
     serverApi: ServerApiVersion.v1,
 });
 
-//  ----------------------------------------------------------------------------
-
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-//  ----------------------------------------------------------------------------
+const getNASAData = async (start, end, lat, lng) => {
+    const url = `https://power.larc.nasa.gov/api/temporal/climatology/point?start=${start}&end=${end}&latitude=${lat}&longitude=${lng}&community=re&parameters=WS2M,WD2M,WS10M,WD10M,WS50M,WD50M&format=json&header=true`;
 
-const getNASAData = (start, end, lat, long) => {
-    const url = `https://power.larc.nasa.gov/api/temporal/climatology/point?start=${start}&end=${end}&latitude=${lat}&longitude=${long}&community=re&parameters=WS2M,WD2M,WS10M,WD10M,WS50M,WD50M&format=json&header=true`;
-
-    let res = fetch(url)
-        .then((result) => result.json())
-        .then((final) => final.properties.parameter);
-
-    return res;
+    const result = await axios.get(url);
+    return result.data.properties.parameter;
 };
 
-const getCityLocation = (name) => {
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${name},CT,US&appid=${API}`;
+const getCityName = async (lat, lng) => {
+    const url = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&limit=1&appid=${GEOCODING_API_KEY}`;
 
-    let res = fetch(url)
-        .then((result) => result.json())
-        .then((final) => final[0]);
-
-    return res;
+    const result = await axios.get(url);
+    return result.data[0].name;
 };
 
-app.get('/api/loc/:name', async (req, res) => {
+app.get('/api/loc', async (req, res) => {
     try {
         await client.connect();
 
         const collection = client.db('NASA').collection('Locations');
+        const lat = parseFloat(req.query.lat);
+        const lng = parseFloat(req.query.lng);
+        const startYear = req.query.startYear;
+        const cityName = (await getCityName(lat, lng)).toLowerCase();
 
-        const cname = req.params.name.toLocaleLowerCase();
-
-        if (cname) {
-            const city = await collection.findOne({ name: cname });
+        if (cityName) {
+            const city = await collection.findOne({ name: cityName });
 
             if (city) {
                 res.status(200).json(city);
             } else {
-                let data = await getCityLocation(cname);
-
-                let lat = data.lat;
-                let long = data.lon;
-
-                let nasa = await getNASAData(2019, 2020, lat, long);
-                
-                await collection.insertOne({ name: cname, data: nasa });
-                res.status(200).json({ name: cname, data: nasa })
+                const nasaData = await getNASAData(startYear, 2021, lat, lng);
+                await collection.insertOne({ name: cityName, data: nasaData });
+                res.status(200).json({ name: cityName, data: nasaData });
             }
         }
     } catch (e) {
+        console.error(e);
         res.status(500).json({ error: 'Internal Server Error' });
     } finally {
         await client.close();
