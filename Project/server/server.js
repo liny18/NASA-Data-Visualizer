@@ -23,7 +23,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 //  ----------------------------------------------------------------------------
 
 const getNASAData = (start, end, lat, long) => {
-    const url = `https://power.larc.nasa.gov/api/temporal/climatology/point?start=${start}&end=${end}&latitude=${lat}&longitude=${long}&community=re&parameters=WS50M,WD50M&format=json&header=true`;
+    const url = `https://power.larc.nasa.gov/api/temporal/climatology/point?start=${start}&end=${end}&latitude=${lat}&longitude=${long}&community=re&parameters=WS2M,WD2M,WS10M,WD10M,WS50M,WD50M&format=json&header=true`;
 
     let res = fetch(url)
         .then((result) => result.json())
