@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import { useData } from "../Pages/Data";
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ";
 
 export const DataMap = () => {
-  const [lng, setLng] = useState(-72.699997);
-  const [lat, setLat] = useState(41.599998);
+  const { lat, setLat, lng, setLng } = useData();
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -15,7 +15,6 @@ export const DataMap = () => {
       container: "map",
       style: "mapbox://styles/mapbox/streets-v11",
       center: [-72.699997, 41.599998],
-      // zoom: 7.6,
       maxBounds: [
         [-73.727775, 40.950942], // Southwest coordinates
         [-71.786994, 42.050591], // Northeast coordinates
@@ -23,9 +22,9 @@ export const DataMap = () => {
     });
 
     map.on("click", function (e) {
+      var coordinates = e.lngLat;
       setLng(e.lngLat.lng);
       setLat(e.lngLat.lat);
-      var coordinates = e.lngLat;
 
       if (markerRef.current) {
         markerRef.current.remove();
@@ -50,8 +49,8 @@ export const DataMap = () => {
           .setLngLat(coordinates)
           .setHTML(
             `<div class="p-1 text-sm font-sans">
-              <p>Latitude: ${lat}</p>
-              <p>Longitude: ${lng}</p>
+              <p>Latitude: ${coordinates.lat}</p>
+              <p>Longitude: ${coordinates.lng}</p>
             </div>`
           )
           .addTo(map);
