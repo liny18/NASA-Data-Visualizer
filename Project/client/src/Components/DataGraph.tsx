@@ -1,27 +1,44 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import Exporting from "highcharts/modules/exporting";
+import { useData } from "../Pages/Data";
+import { DataContext } from "../Pages/Data";
 
 // Initialize the exporting module
 Exporting(Highcharts);
 
-export const DataGraph = () => {
-  const data = [
-    ["Jan", 0.99, 3, 5.25],
-    ["Feb", 1.04, 2.96, 5.18],
-    ["Mar", 0.91, 3.11, 5.55],
-    ["Apr", 0.67, 3, 5.42],
-    ["May", 0.45, 2.43, 4.59],
-    ["Jun", 0.36, 1.96, 3.81],
-    ["Jul", 0.39, 1.86, 3.65],
-    ["Aug", 0.45, 1.98, 3.82],
-    ["Sep", 0.56, 2.26, 4.37],
-    ["Oct", 0.63, 2.41, 4.45],
-    ["Nov", 0.68, 2.57, 4.83],
-    ["Dec", 0.77, 2.8, 5.12],
-    ["Ann", 0.66, 2.53, 4.67],
-  ];
+interface DataItem {
+  month: string;
+  value: number;
+}
+
+interface DataEntry {
+  parameter: string;
+  values: DataItem[];
+}
+
+export const DataGraph: React.FC = () => {
+  const { data } = useData();
+
+  const processedData = useMemo(() => {
+    const ws2m =
+      (data.find((item) => item.parameter === "WS2M") as DataEntry)?.values ||
+      [];
+    const ws10m =
+      (data.find((item) => item.parameter === "WS10M") as DataEntry)?.values ||
+      [];
+    const ws50m =
+      (data.find((item) => item.parameter === "WS50M") as DataEntry)?.values ||
+      [];
+
+    return ws2m.map((item, index) => [
+      item.month,
+      item.value,
+      ws10m[index]?.value,
+      ws50m[index]?.value,
+    ]);
+  }, [data]);
 
   const options = {
     exporting: {
@@ -47,7 +64,7 @@ export const DataGraph = () => {
       text: "Wind Speed from 2020 to 2021",
     },
     xAxis: {
-      categories: data.map((item) => item[0]),
+      categories: processedData.map((item) => item[0]),
       title: {
         text: "Year",
       },
@@ -96,17 +113,17 @@ export const DataGraph = () => {
       {
         name: "At 2 meters",
         type: "spline",
-        data: data.map((item) => item[1]),
+        data: processedData.map((item) => item[1]),
       },
       {
         name: "At 10 meters",
         type: "spline",
-        data: data.map((item) => item[2]),
+        data: processedData.map((item) => item[2]),
       },
       {
         name: "At 50 meters",
         type: "spline",
-        data: data.map((item) => item[3]),
+        data: processedData.map((item) => item[3]),
       },
     ],
   };
