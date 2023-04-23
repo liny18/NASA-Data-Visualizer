@@ -1,31 +1,87 @@
-import React from "react";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import React, { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
 
-type LoadScriptHookReturnValue = {
-  isLoaded: boolean;
-  loadError: Error | null | undefined;
-};
+mapboxgl.accessToken =
+  "pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ";
 
 export const DataMap = () => {
-  const apiKey = "AIzaSyDB_puHl5GSEG1qC7WDNXgskT2Z1tkERqc";
-  const { isLoaded, loadError }: LoadScriptHookReturnValue = useLoadScript({
-    googleMapsApiKey: apiKey || "",
-  });
+  const [lng, setLng] = useState(-72.699997);
+  const [lat, setLat] = useState(41.599998);
+  const markerRef = useRef<mapboxgl.Marker | null>(null);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: "map",
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-72.699997, 41.599998],
+      // zoom: 7.6,
+      maxBounds: [
+        [-73.727775, 40.950942], // Southwest coordinates
+        [-71.786994, 42.050591], // Northeast coordinates
+      ],
+    });
+
+    map.on("click", function (e) {
+      setLng(e.lngLat.lng);
+      setLat(e.lngLat.lat);
+      var coordinates = e.lngLat;
+
+      if (markerRef.current) {
+        markerRef.current.remove();
+      }
+
+      const marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+
+      markerRef.current = marker;
+
+      if (btnRef.current) {
+        btnRef.current.remove();
+      }
+
+      const btn = document.createElement("button");
+      btn.id = "show-info-btn";
+      btn.className =
+        "btn-class z-10 rounded-md bg-emerald-400 px-3 py-1 text-white shadow-lg";
+      btn.textContent = "Load data for this location";
+      btn.onclick = function (event) {
+        event.stopPropagation();
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(
+            `<div class="p-1 text-sm font-sans">
+              <p>Latitude: ${lat}</p>
+              <p>Longitude: ${lng}</p>
+            </div>`
+          )
+          .addTo(map);
+      };
+
+      btnRef.current = btn;
+
+      const markerElement = marker.getElement();
+      markerElement.style.pointerEvents = "none";
+      btn.style.pointerEvents = "auto";
+      markerElement.style.display = "flex";
+      markerElement.style.flexDirection = "column";
+      markerElement.style.justifyContent = "center";
+      markerElement.style.alignItems = "center";
+      markerElement.appendChild(btn);
+    });
+
+    // Clean up
+    return () => map.remove();
+  }, []);
 
   return (
-    <div className="data-map col-span-2 h-full rounded-3xl border-2 border-emerald-200 bg-emerald-100 p-2 shadow-[6px_6px_2px_0px_#6ee7b7] ">
-      {loadError && <div>Map cannot be loaded right now, sorry.</div>}
-      {isLoaded && (
-        <GoogleMap
-          mapContainerStyle={{
-            width: "100%",
-            height: "100%",
-            borderRadius: "10px",
-          }}
-          zoom={8}
-          center={{ lat: 41.4790845, lng: -72.749954 }}
-        ></GoogleMap>
-      )}
+    <div className="data-map col-span-2 h-full rounded-3xl border-2 border-emerald-200 bg-emerald-100 p-2 shadow-[6px_6px_2px_0px_#6ee7b7]">
+      <div className="relative h-full">
+        <div
+          id="map"
+          className="map-container absolute h-full w-full rounded-xl"
+        ></div>
+      </div>
     </div>
   );
 };
+export default DataMap;
