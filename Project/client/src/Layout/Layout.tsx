@@ -21,10 +21,12 @@ export const Layout = ({ children }: LayoutProps) => {
       }}
     >
       <Header />
-      <main className="main-container mt-10 h-full items-center justify-center px-10">
-        {children}
-      </main>
-      <Footer />
+      <div className="layout-content flex h-full min-h-screen w-full flex-col items-center justify-between">
+        <main className="main-container mt-10 h-full items-center justify-center px-10">
+          {children}
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };

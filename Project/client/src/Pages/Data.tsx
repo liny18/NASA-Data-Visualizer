@@ -5,6 +5,7 @@ import { DataMap } from "../Components/DataMap";
 import { DataText } from "../Components/DataText";
 import { DataList } from "../Components/DataList";
 import { DataPlot } from "../Components/DataPlot";
+import { Slider } from "../Components/Slider/Slider";
 
 interface MonthDataType {
   $numberDouble?: string;
@@ -12,16 +13,21 @@ interface MonthDataType {
 }
 
 type DataContextType = {
+  init: boolean;
+  setInit: (init: boolean) => void;
   lat: number;
   setLat: (lat: number) => void;
   lng: number;
   setLng: (lng: number) => void;
   name: string;
   setName: (name: string) => void;
-  year: number;
-  setYear: (year: number) => void;
+  fetchYear: number;
+  setfetchYear: (fetchYear: number) => void;
+  displayYear: number;
+  setDisplayYear: (displayYear: number) => void;
   data: any[];
   setData: React.Dispatch<React.SetStateAction<any[]>>;
+  fetchData: (lat: number, lng: number, fetchYear: number) => Promise<void>;
 };
 
 export const DataContext = createContext<DataContextType | undefined>(
@@ -36,16 +42,8 @@ export const useData = (): DataContextType => {
   return context;
 };
 
-interface MongoDataType {
-  _id: { $oid: string };
-  name: string;
-  data: { [key: string]: { [key: string]: MonthDataType } };
-}
-
 const processMongoData = (mongoData: any) => {
   const { data } = mongoData;
-  console.log("Raw data:", data);
-
   const processedData = Object.entries(data).map(
     ([key, value]: [string, any]) => {
       const monthValues = Object.entries(value).map(([month, monthData]) => {
@@ -64,84 +62,133 @@ const processMongoData = (mongoData: any) => {
     }
   );
 
-  console.log("Processed data:", processedData);
   return processedData;
 };
 
 const DataProvider = ({ children }: { children: React.ReactNode }) => {
+  const [init, setInit] = useState(false);
   const [lat, setLat] = useState(41.599998);
   const [lng, setLng] = useState(-72.699997);
   const [name, setName] = useState("Connecticut");
-  const [year, setYear] = useState(2020);
+  const [fetchYear, setfetchYear] = useState(2020);
+  const [displayYear, setDisplayYear] = useState(0);
   const [data, setData] = useState<any[]>([]);
 
+  const fetchData = async (lat: number, lng: number, fetchYear: number) => {
+    try {
+      const response = await axios.get("/api/loc", {
+        params: {
+          lat,
+          lng,
+          startYear: fetchYear,
+        },
+      });
+      const processedData = processMongoData(response.data);
+      setData(processedData);
+      setDisplayYear(fetchYear);
+      setName(
+        response.data.name.charAt(0).toUpperCase() + response.data.name.slice(1)
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const value = {
+    init,
+    setInit,
     lat,
     setLat,
     lng,
     setLng,
     name,
     setName,
-    year,
-    setYear,
+    fetchYear,
+    setfetchYear,
+    displayYear,
+    setDisplayYear,
     data,
     setData,
+    fetchData,
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/loc", {
-          params: {
-            lat,
-            lng,
-            startYear: year,
-          },
-        });
-        const processedData = processMongoData(response.data);
-        console.log("lat:", lat, "lng:", lng, "year:", year);
-        console.log("Response data:", response.data);
-        console.log("Processed data:", processedData);
-
-        console.log("Data:", processedData);
-        setData(processedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [lat, lng, setData]);
-
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 
 export const Data = () => {
+  const [timePeriod, setTimePeriod] = useState("past 1 year");
+  const handleTimePeriodChange = (value: string) => {
+    setTimePeriod(value);
+  };
+
   return (
     <DataProvider>
-      <div className="data-page flex h-full w-full flex-col items-center justify-center gap-10 pt-20 pb-10">
-        <div className="data-title flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
-          <h1 className="relative text-3xl font-bold">
-            Select a location on the map to load the corresponding data.
-          </h1>
-          <p className="font-sans text-md italic">
-            Please note that the available data pertains only to the year 2021.
-          </p>
+      <DataContent
+        handleTimePeriodChange={handleTimePeriodChange}
+        timePeriod={timePeriod}
+      />
+    </DataProvider>
+  );
+};
+
+const DataContent = ({
+  handleTimePeriodChange,
+  timePeriod,
+}: {
+  handleTimePeriodChange: (value: string) => void;
+  timePeriod: string;
+}) => {
+  const { lat, lng, fetchYear, fetchData, displayYear, init, setInit } =
+    useData();
+  const handleButtonClick = async () => {
+    if (fetchYear === displayYear) {
+      return;
+    }
+    await fetchData(lat, lng, fetchYear);
+    if (!init) {
+      setInit(true);
+    }
+  };
+
+  return (
+    <div className="data-page flex h-full w-screen flex-col items-center justify-center gap-10 px-10 pt-20 pb-10">
+      <div className="data-title flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
+        <h1 className="relative text-3xl font-bold">
+          Select a location on the map to load the corresponding data.
+        </h1>
+        <p className="font-sans text-md italic">
+          Please note that the available data pertains only to the year 2021.
+        </p>
+      </div>
+      <div className="flex w-full flex-col items-center justify-center gap-10">
+        <Slider onChange={handleTimePeriodChange} />
+        <button
+          className="w-1/6 rounded-lg bg-[#4caf50] py-2 px-1 font-semibold text-white shadow-md hover:bg-[#43a047]"
+          onClick={handleButtonClick}
+        >
+          Load data for {timePeriod}
+        </button>
+      </div>
+      <div
+        className={`data-container flex w-full flex-col items-center justify-center gap-10`}
+      >
+        <div
+          className={`data-item min-h-[300px] w-full gap-7 rounded-lg bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-3`}
+        >
+          <DataText />
+          <DataMap />
         </div>
-        <div className="data-container flex w-full flex-col items-center justify-center gap-10">
-          <div className="data-item h-1/2 min-h-[300px] w-full flex-grow gap-7 rounded-lg bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-3">
-            <DataText />
-            <DataMap />
-          </div>
-          <div className="data-item w-full flex-shrink gap-7 rounded-lg bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-2">
-            <DataPlot />
+        {init && (
+          <div className="data-item w-full gap-7 rounded-lg bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-2">
             <DataGraph />
+            <DataPlot />
           </div>
-          <div className="data-item w-full flex-shrink gap-7 overflow-scroll rounded-lg bg-white p-4 shadow-md">
+        )}
+        {init && (
+          <div className="data-item w-full gap-7 overflow-scroll rounded-lg bg-white p-4 shadow-md">
             <DataList />
           </div>
-        </div>
+        )}
       </div>
-    </DataProvider>
+    </div>
   );
 };
