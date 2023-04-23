@@ -3,7 +3,6 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import Exporting from "highcharts/modules/exporting";
 import { useData } from "../Pages/Data";
-import { DataContext } from "../Pages/Data";
 
 // Initialize the exporting module
 Exporting(Highcharts);
@@ -61,12 +60,12 @@ export const DataGraph: React.FC = () => {
       },
     },
     title: {
-      text: "Wind Speed from 2020 to 2021",
+      text: "Wind Speed",
     },
     xAxis: {
       categories: processedData.map((item) => item[0]),
       title: {
-        text: "Year",
+        text: "fetchYear",
       },
     },
     yAxis: {

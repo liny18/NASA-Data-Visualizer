@@ -42,14 +42,23 @@ app.get('/api/loc', async (req, res) => {
         const cityName = (await getCityName(lat, lng)).toLowerCase();
 
         if (cityName) {
-            const city = await collection.findOne({ name: cityName });
+            const cityYearKey = `${cityName}_${startYear}`; // Create a unique key for city and year
+            const city = await collection.findOne({ key: cityYearKey });
 
             if (city) {
                 res.status(200).json(city);
             } else {
                 const nasaData = await getNASAData(startYear, 2021, lat, lng);
-                await collection.insertOne({ name: cityName, data: nasaData });
-                res.status(200).json({ name: cityName, data: nasaData });
+                await collection.insertOne({
+                    key: cityYearKey,
+                    name: cityName,
+                    data: nasaData,
+                });
+                res.status(200).json({
+                    name: cityName,
+                    year: startYear,
+                    data: nasaData,
+                });
             }
         }
     } catch (e) {

@@ -1,47 +1,95 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useData } from "../Pages/Data";
+
+interface DataItem {
+  month: string;
+  value: number;
+}
+
+interface DataEntry {
+  parameter: string;
+  values: DataItem[];
+}
 
 export const DataList = () => {
-  const Data = {
-    headers: [
-      "Month",
-      "Wind at 2 meters",
-      "Wind at 10 meters",
-      "Wind at 100 meters",
-    ],
-    rows: [
-      ["Jan", "0.99 m/s", "3 m/s", "5.25 m/s"],
-      ["Feb", "1.04 m/s", "2.96 m/s", "5.18 m/s"],
-      ["Mar", "0.91 m/s", "3.11 m/s", "5.55 m/s"],
-      ["Apr", "0.67 m/s", "3 m/s", "5.42 m/s"],
-      ["May", "0.45 m/s", "2.43 m/s", "4.59 m/s"],
-      ["Jun", "0.36 m/s", "1.96 m/s", "3.81 m/s"],
-      ["Jul", "0.39 m/s", "1.86 m/s", "3.65 m/s"],
-      ["Aug", "0.45 m/s", "1.98 m/s", "3.82 m/s"],
-      ["Sep", "0.56 m/s", "2.26 m/s", "4.37 m/s"],
-      ["Oct", "0.63 m/s", "2.41 m/s", "4.45 m/s"],
-      ["Nov", "0.68 m/s", "2.57 m/s", "4.83 m/s"],
-      ["Dec", "0.77 m/s", "2.8 m/s", "5.12 m/s"],
-      ["Avg", "0.66 m/s", "2.53 m/s", "4.67 m/s"],
-    ],
-  };
+  const { data } = useData();
+  const headers = [
+    "Month",
+    "Wind at 2 meters",
+    "Wind at 10 meters",
+    "Wind at 50 meters",
+  ];
+
+  const processedData = useMemo(() => {
+    const ws2m =
+      (data.find((item) => item.parameter === "WS2M") as DataEntry)?.values ||
+      [];
+    const ws10m =
+      (data.find((item) => item.parameter === "WS10M") as DataEntry)?.values ||
+      [];
+    const ws50m =
+      (data.find((item) => item.parameter === "WS50M") as DataEntry)?.values ||
+      [];
+    const wd2m =
+      (data.find((item) => item.parameter === "WD2M") as DataEntry)?.values ||
+      [];
+    const wd10m =
+      (data.find((item) => item.parameter === "WD10M") as DataEntry)?.values ||
+      [];
+    const wd50m =
+      (data.find((item) => item.parameter === "WD50M") as DataEntry)?.values ||
+      [];
+
+    const rows = ws2m.map((item, index) => [
+      item.month,
+      `${item.value} m/s`,
+      `${wd2m[index]?.value}°`,
+      `${ws10m[index]?.value} m/s`,
+      `${wd10m[index]?.value}°`,
+      `${ws50m[index]?.value} m/s`,
+      `${wd50m[index]?.value}°`,
+    ]);
+
+    return rows;
+  }, [data]);
 
   return (
     <div className="DataList col-span-1 flex h-full w-full gap-1 overflow-scroll rounded-3xl border-2 border-sky-200 bg-sky-100 shadow-[6px_6px_2px_0px_#7dd3fc] sm:flex-col sm:items-center sm:p-0">
       <table className="w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            {Data.headers.map((header, index) => (
+            <th
+              rowSpan={2}
+              className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+            >
+              Month
+            </th>
+            {headers.slice(1).map((header, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                colSpan={2}
+                className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-500"
               >
                 {header}
               </th>
             ))}
           </tr>
+          <tr>
+            {headers.slice(1).map((_, index) => (
+              <React.Fragment key={index}>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  Speed
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  Direction
+                </th>
+              </React.Fragment>
+            ))}
+          </tr>
         </thead>
+
         <tbody className="divide-y divide-gray-200 bg-white">
-          {Data.rows.map((row, rowIndex) => (
+          {processedData.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td
@@ -58,3 +106,5 @@ export const DataList = () => {
     </div>
   );
 };
+
+export default DataList;

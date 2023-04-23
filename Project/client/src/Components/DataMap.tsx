@@ -6,7 +6,7 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ";
 
 export const DataMap = () => {
-  const { lat, setLat, lng, setLng } = useData();
+  const { setLat, setLng } = useData();
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
@@ -23,8 +23,8 @@ export const DataMap = () => {
 
     map.on("click", function (e) {
       var coordinates = e.lngLat;
-      setLng(e.lngLat.lng);
-      setLat(e.lngLat.lat);
+      setLat(coordinates.lat);
+      setLng(coordinates.lng);
 
       if (markerRef.current) {
         markerRef.current.remove();
@@ -37,35 +37,12 @@ export const DataMap = () => {
       if (btnRef.current) {
         btnRef.current.remove();
       }
-
-      const btn = document.createElement("button");
-      btn.id = "show-info-btn";
-      btn.className =
-        "btn-class z-10 rounded-md bg-emerald-400 px-3 py-1 text-white shadow-lg";
-      btn.textContent = "Load data for this location";
-      btn.onclick = function (event) {
-        event.stopPropagation();
-        new mapboxgl.Popup()
-          .setLngLat(coordinates)
-          .setHTML(
-            `<div class="p-1 text-sm font-sans">
-              <p>Latitude: ${coordinates.lat}</p>
-              <p>Longitude: ${coordinates.lng}</p>
-            </div>`
-          )
-          .addTo(map);
-      };
-
-      btnRef.current = btn;
-
       const markerElement = marker.getElement();
       markerElement.style.pointerEvents = "none";
-      btn.style.pointerEvents = "auto";
       markerElement.style.display = "flex";
       markerElement.style.flexDirection = "column";
       markerElement.style.justifyContent = "center";
       markerElement.style.alignItems = "center";
-      markerElement.appendChild(btn);
     });
 
     // Clean up
