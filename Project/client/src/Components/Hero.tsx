@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
-    <div className="hero-container items-center sm:flex sm:flex-col sm:justify-center sm:gap-10 lg:flex-row lg:justify-between">
+    <div className="hero-container flex flex-col items-center gap-10 md:flex-row md:justify-between">
       <div className="hero-text z-10 flex flex-col items-start justify-center gap-10">
-        <h1 className="text-5xl font-extrabold">
+        <h1 className="text-center text-4xl font-extrabold md:text-left md:text-5xl">
           Explore Wind Energy Potential in Connecticut
         </h1>
-        <p className="text-lg">
+        <p className="text-center text-lg md:text-left">
           Our website helps you visualize the wind pattern and temperature of
           locations in Connecticut, powered by <br />
           <a
@@ -21,14 +21,16 @@ export const Hero = () => {
             NASA's Power API.
           </a>
         </p>
-        <Link
-          to="/node/data"
-          className="w-100 rounded-3xl border-2 border-red-200 bg-red-100 p-3 shadow-[5px_5px_2px_0px_#fca5a5] hover:bg-red-200"
-        >
-          <button>
-            <h1 className="text-lg font-semibold">Get Started</h1>
-          </button>
-        </Link>
+        <div className="flex w-full justify-center">
+          <Link
+            to="/node/data"
+            className="w-100 rounded-3xl border-2 border-red-200 bg-red-100 p-3 shadow-[5px_5px_2px_0px_#fca5a5] hover:bg-red-200"
+          >
+            <button>
+              <h1 className="text-lg font-semibold">Get Started</h1>
+            </button>
+          </Link>
+        </div>
       </div>
 
       <div className="hero-image z-10 flex flex-col items-center justify-center rounded-3xl border-2 border-sky-200 bg-sky-100 py-16 px-20 shadow-[6px_6px_2px_0px_#7dd3fc]">
