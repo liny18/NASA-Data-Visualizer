@@ -12,7 +12,7 @@ export const Hero = () => {
         </h1>
         <p className="text-lg">
           Our website helps you visualize the wind pattern and temperature of
-          locations in Connecticut, powered by <br />
+          locations in Connecticut, powered by{" "}
           <a
             className="rounded-3xl border-2 border-orange-200 bg-orange-100 p-2 font-semibold italic underline shadow-[5px_5px_2px_0px_#fdba74] hover:bg-orange-200"
             href="https://power.larc.nasa.gov/"
