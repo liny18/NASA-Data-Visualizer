@@ -44,5 +44,3 @@ Building for Production
 Deployment
 
     To deploy the application, follow the deployment guidelines for your preferred hosting platform (e.g., Heroku, Vercel, Netlify, etc.). Don't forget to configure the necessary environment variables.
-
-Happy coding!
