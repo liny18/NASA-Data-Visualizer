@@ -5,9 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "nodemon server.js",
-        "pretty": "npm prettier --write ."
-    },
+        "start": "/bin/sh /home/vembes/nodestartup.sh final && pwd && node server",
+        "dev": "nodemon server"
+      },
     "keywords": [],
     "author": "",
     "license": "ISC",
