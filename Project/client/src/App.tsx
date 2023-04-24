@@ -10,10 +10,10 @@ function App() {
     <div className="App overflow-x-hidden scroll-smooth bg-gray-50">
       <Layout>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<Dashboard />} />
-          <Route path="/data" element={<Data />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/node/" element={<Navigate to="/node/home" />} />
+          <Route path="/node/home" element={<Dashboard />} />
+          <Route path="/node/data" element={<Data />} />
+          <Route path="/node/about" element={<About />} />
         </Routes>
       </Layout>
     </div>

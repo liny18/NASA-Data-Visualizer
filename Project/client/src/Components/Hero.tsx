@@ -22,7 +22,7 @@ export const Hero = () => {
           </a>
         </p>
         <Link
-          to="/data"
+          to="/node/data"
           className="w-100 rounded-3xl border-2 border-red-200 bg-red-100 p-3 shadow-[5px_5px_2px_0px_#fca5a5] hover:bg-red-200"
         >
           <button>
