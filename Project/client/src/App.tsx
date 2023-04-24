@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "./Layout/Layout";
 import { Dashboard } from "./Pages/Dashboard";
 import { About } from "./Pages/About";
@@ -10,6 +10,7 @@ function App() {
     <div className="App overflow-x-hidden scroll-smooth bg-gray-50">
       <Layout>
         <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Dashboard />} />
           <Route path="/data" element={<Data />} />
           <Route path="/about" element={<About />} />

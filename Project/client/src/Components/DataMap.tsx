@@ -6,7 +6,7 @@ const fetchAccessToken = async () => {
   try {
     const response = await fetch("/api/getAccessToken");
     const data = await response.json();
-    mapboxgl.accessToken = data.accessToken;
+    return data.accessToken;
   } catch (error) {
     console.error("Error fetching access token:", error);
   }
@@ -18,43 +18,49 @@ export const DataMap = () => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    fetchAccessToken();
-    const map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-72.699997, 41.599998],
-      maxBounds: [
-        [-73.727775, 40.950942], // Southwest coordinates
-        [-71.786994, 42.050591], // Northeast coordinates
-      ],
-    });
+    const initializeMap = async () => {
+      const accessToken = await fetchAccessToken();
+      mapboxgl.accessToken = accessToken;
 
-    map.on("click", function (e) {
-      var coordinates = e.lngLat;
-      setLat(coordinates.lat);
-      setLng(coordinates.lng);
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [-72.699997, 41.599998],
+        maxBounds: [
+          [-73.727775, 40.950942], // Southwest coordinates
+          [-71.786994, 42.050591], // Northeast coordinates
+        ],
+      });
 
-      if (markerRef.current) {
-        markerRef.current.remove();
-      }
+      map.on("click", function (e) {
+        var coordinates = e.lngLat;
+        setLat(coordinates.lat);
+        setLng(coordinates.lng);
 
-      const marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+        if (markerRef.current) {
+          markerRef.current.remove();
+        }
 
-      markerRef.current = marker;
+        const marker = new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
 
-      if (btnRef.current) {
-        btnRef.current.remove();
-      }
-      const markerElement = marker.getElement();
-      markerElement.style.pointerEvents = "none";
-      markerElement.style.display = "flex";
-      markerElement.style.flexDirection = "column";
-      markerElement.style.justifyContent = "center";
-      markerElement.style.alignItems = "center";
-    });
+        markerRef.current = marker;
 
-    // Clean up
-    return () => map.remove();
+        if (btnRef.current) {
+          btnRef.current.remove();
+        }
+        const markerElement = marker.getElement();
+        markerElement.style.pointerEvents = "none";
+        markerElement.style.display = "flex";
+        markerElement.style.flexDirection = "column";
+        markerElement.style.justifyContent = "center";
+        markerElement.style.alignItems = "center";
+      });
+
+      // Clean up
+      return () => map.remove();
+    };
+
+    initializeMap();
   }, []);
 
   return (
