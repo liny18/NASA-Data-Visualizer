@@ -12,10 +12,6 @@ app.use(express.json());
 
 app.use('/', express.static('../client/dist'));
 
-// app.get('*', (req, res) => {
-//     res.sendFile('index.html', { root: '../client/dist' });
-// });
-
 const client = new MongoClient(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -79,4 +75,8 @@ app.get('/api/loc', async (req, res) => {
 app.get('/api/getAccessToken', (req, res) => {
     const accessToken = process.env.MAPBOX_ACCESS_TOKEN;
     res.status(200).json({ accessToken });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile('index.html', { root: '../client/dist' });
 });
