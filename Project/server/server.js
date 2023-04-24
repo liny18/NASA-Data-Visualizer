@@ -71,3 +71,8 @@ app.get('/api/loc', async (req, res) => {
         await client.close();
     }
 });
+
+app.get('/api/getAccessToken', (req, res) => {
+    const accessToken = process.env.MAPBOX_ACCESS_TOKEN;
+    res.status(200).json({ accessToken });
+});

@@ -2,7 +2,15 @@ import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import { useData } from "../Pages/Data";
 
-mapboxgl.accessToken = process.env.VITE_APP_MAP_TOKEN as string;
+const fetchAccessToken = async () => {
+  try {
+    const response = await fetch("/api/getAccessToken");
+    const data = await response.json();
+    mapboxgl.accessToken = data.accessToken;
+  } catch (error) {
+    console.error("Error fetching access token:", error);
+  }
+};
 
 export const DataMap = () => {
   const { setLat, setLng } = useData();
@@ -10,6 +18,7 @@ export const DataMap = () => {
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
+    fetchAccessToken();
     const map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/streets-v11",
