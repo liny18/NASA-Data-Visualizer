@@ -12,9 +12,9 @@ app.use(express.json());
 
 app.use('/', express.static('../client/dist'));
 
-app.get('*', (req, res) => {
-    res.sendFile('index.html', { root: '../client/dist' });
-});
+// app.get('*', (req, res) => {
+//     res.sendFile('index.html', { root: '../client/dist' });
+// });
 
 const client = new MongoClient(MONGODB_URI, {
     useNewUrlParser: true,
