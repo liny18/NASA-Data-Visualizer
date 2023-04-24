@@ -77,7 +77,7 @@ const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchData = async (lat: number, lng: number, fetchYear: number) => {
     try {
-      const response = await axios.get("/api/loc", {
+      const response = await axios.get("/node/api/loc", {
         params: {
           lat,
           lng,

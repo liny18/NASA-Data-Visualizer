@@ -4,7 +4,7 @@ import { useData } from "../Pages/Data";
 
 const fetchAccessToken = async () => {
   try {
-    const response = await fetch("/api/getAccessToken");
+    const response = await fetch("/node/api/getAccessToken");
     const data = await response.json();
     return data.accessToken;
   } catch (error) {

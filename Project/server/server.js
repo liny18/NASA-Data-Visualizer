@@ -10,7 +10,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use(express.json());
 
-app.use('/node', express.static('../client/dist'));
+app.use('/', express.static('../client/dist'));
 
 const client = new MongoClient(MONGODB_URI, {
     useNewUrlParser: true,
