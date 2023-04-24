@@ -10,7 +10,7 @@ function App() {
     <div className="App overflow-x-hidden scroll-smooth bg-gray-50">
       <Layout>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/home" element={<Dashboard />} />
           <Route path="/data" element={<Data />} />
           <Route path="/about" element={<About />} />
         </Routes>
