@@ -3,7 +3,6 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import Exporting from "highcharts/modules/exporting";
 import { useData } from "../Pages/Data";
-import { useSpring, animated } from "react-spring";
 
 // Initialize the exporting module
 Exporting(Highcharts);
@@ -20,12 +19,6 @@ interface DataEntry {
 
 export const DataGraph: React.FC = () => {
   const { data } = useData();
-
-  const fadeInAnimation = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { duration: 500 },
-  });
 
   const processedData = useMemo(() => {
     const ws2m =
@@ -143,11 +136,9 @@ export const DataGraph: React.FC = () => {
 
   return (
     <div className="data-graph col-span-1 h-full w-full rounded-3xl border-2 border-red-200 bg-red-100 p-2 shadow-[6px_6px_2px_0px_#fca5a5]">
-      <animated.div style={fadeInAnimation}>
-        <div style={chartContainerStyle}>
-          <HighchartsReact highcharts={Highcharts} options={options} />
-        </div>
-      </animated.div>
+      <div style={chartContainerStyle}>
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </div>
     </div>
   );
 };
