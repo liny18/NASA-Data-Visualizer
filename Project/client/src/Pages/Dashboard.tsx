@@ -4,7 +4,7 @@ import explore from "../assets/undraw_explore_re_8l4v.svg";
 export const Dashboard = () => {
   return (
     <>
-      <div className="home-container flex h-full w-full flex-col items-center justify-center gap-10 pt-32 md:pt-0">
+      <div className="home-container flex h-full w-full flex-col items-center justify-center gap-10 py-10 md:py-0">
         <Hero />
       </div>
       <div

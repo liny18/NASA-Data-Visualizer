@@ -176,9 +176,9 @@ const DataContent = ({
   };
 
   return (
-    <div className="data-page flex h-full w-screen flex-col items-center justify-center gap-10 px-10 pb-10">
+    <div className="data-page flex h-full w-screen flex-col items-center justify-center gap-10 px-4 pb-10 sm:px-10">
       <Toaster />
-      <div className="data-title flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
+      <div className="data-title mb-6 flex w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-4 shadow-md">
         <h1 className="relative text-3xl font-bold">
           Select a location on the map to load the corresponding data.
         </h1>
@@ -189,7 +189,7 @@ const DataContent = ({
       <div className="flex w-full flex-col items-center justify-center gap-10">
         <Slider onChange={handleTimePeriodChange} />
         <button
-          className="w-full rounded-lg bg-[#4caf50] py-2 px-1 font-semibold text-white shadow-md hover:bg-[#43a047] md:w-1/6"
+          className="mt-4 mb-8 w-full rounded-xl bg-[#4caf50] py-2 px-1 font-semibold text-white shadow-md hover:bg-[#43a047] md:w-1/6"
           onClick={handleButtonClick}
         >
           Load data for {timePeriod}
@@ -199,19 +199,19 @@ const DataContent = ({
         className={`data-container flex w-full flex-col items-center justify-center gap-10`}
       >
         <div
-          className={`data-item min-h-[300px] w-full gap-7 rounded-lg bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-3`}
+          className={`data-item mb-8 min-h-[300px] w-full gap-7 rounded-xl border border-gray-200 bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center sm:gap-7 lg:grid lg:grid-cols-3 lg:gap-7`}
         >
           <DataText />
           <DataMap />
         </div>
         {init && (
-          <div className="data-item w-full gap-7 rounded-lg bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center lg:grid lg:grid-cols-2">
+          <div className="data-item mb-8 w-full gap-7 rounded-xl border border-gray-200 bg-white p-4 shadow-md sm:flex sm:flex-col sm:justify-center sm:gap-7 lg:grid lg:grid-cols-2 lg:gap-7">
             <DataGraph />
             <DataPlot />
           </div>
         )}
         {init && (
-          <div className="data-item w-full gap-7 overflow-scroll rounded-lg bg-white p-4 shadow-md">
+          <div className="data-item w-full gap-7 overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-md">
             <DataList />
           </div>
         )}
