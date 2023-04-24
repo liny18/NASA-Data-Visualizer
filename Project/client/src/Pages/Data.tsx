@@ -176,7 +176,7 @@ const DataContent = ({
   };
 
   return (
-    <div className="data-page flex h-full w-screen flex-col items-center justify-center gap-10 px-10 pt-20 pb-10">
+    <div className="data-page flex h-full w-screen flex-col items-center justify-center gap-10 px-10 pb-10">
       <Toaster />
       <div className="data-title flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
         <h1 className="relative text-3xl font-bold">
@@ -189,7 +189,7 @@ const DataContent = ({
       <div className="flex w-full flex-col items-center justify-center gap-10">
         <Slider onChange={handleTimePeriodChange} />
         <button
-          className="w-1/6 rounded-lg bg-[#4caf50] py-2 px-1 font-semibold text-white shadow-md hover:bg-[#43a047]"
+          className="w-full rounded-lg bg-[#4caf50] py-2 px-1 font-semibold text-white shadow-md hover:bg-[#43a047] md:w-1/6"
           onClick={handleButtonClick}
         >
           Load data for {timePeriod}

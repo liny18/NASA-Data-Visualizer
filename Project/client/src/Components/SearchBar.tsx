@@ -1,5 +1,4 @@
 import React from "react";
-import { useData } from "../Pages/Data";
 import { BiSearch } from "react-icons/bi";
 
 export const SearchBar = () => {

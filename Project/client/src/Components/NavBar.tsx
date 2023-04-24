@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export const NavBar = () => {
   return (
-    <div className="nav-container items-between flex flex-row justify-between gap-10">
+    <div className="nav-container flex flex-col items-center justify-between gap-4 px-4 py-4 md:flex-row md:gap-10 md:px-8 md:py-6">
       <div className="nav-item">
         <NavLink
           to="/"
@@ -14,7 +14,7 @@ export const NavBar = () => {
           }
         >
           <button>
-            <h1>DASHBOARD</h1>
+            <h1 className="text-sm md:text-base">DASHBOARD</h1>
           </button>
         </NavLink>
       </div>
@@ -28,7 +28,7 @@ export const NavBar = () => {
           }
         >
           <button>
-            <h1>DATA</h1>
+            <h1 className="text-sm md:text-base">DATA</h1>
           </button>
         </NavLink>
       </div>
@@ -42,7 +42,7 @@ export const NavBar = () => {
           }
         >
           <button>
-            <h1>ABOUT</h1>
+            <h1 className="text-sm md:text-base">ABOUT</h1>
           </button>
         </NavLink>
       </div>
