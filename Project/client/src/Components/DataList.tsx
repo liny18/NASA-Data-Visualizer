@@ -43,11 +43,11 @@ export const DataList = () => {
     const rows = ws2m.map((item, index) => [
       item.month,
       `${item.value} m/s`,
-      `${wd2m[index]?.value}°`,
+      `${wd2m[index]?.value}° N`,
       `${ws10m[index]?.value} m/s`,
-      `${wd10m[index]?.value}°`,
+      `${wd10m[index]?.value}° N`,
       `${ws50m[index]?.value} m/s`,
-      `${wd50m[index]?.value}°`,
+      `${wd50m[index]?.value}° N`,
     ]);
 
     return rows;
@@ -106,5 +106,3 @@ export const DataList = () => {
     </div>
   );
 };
-
-export default DataList;

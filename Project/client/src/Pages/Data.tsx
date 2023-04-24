@@ -6,6 +6,7 @@ import { DataText } from "../Components/DataText";
 import { DataList } from "../Components/DataList";
 import { DataPlot } from "../Components/DataPlot";
 import { Slider } from "../Components/Slider/Slider";
+import { Toaster, toast } from "react-hot-toast";
 
 interface MonthDataType {
   $numberDouble?: string;
@@ -139,18 +140,44 @@ const DataContent = ({
 }) => {
   const { lat, lng, fetchYear, fetchData, displayYear, init, setInit } =
     useData();
+
+  // Add these two state variables to store the previous lat and lng values
+  const [prevLat, setPrevLat] = useState(lat);
+  const [prevLng, setPrevLng] = useState(lng);
+
   const handleButtonClick = async () => {
-    if (fetchYear === displayYear) {
+    // Check if the year and location are the same
+    const locationChanged = lat !== prevLat || lng !== prevLng;
+    if (fetchYear === displayYear && !locationChanged) {
+      toast.error("Data for this period is already loaded.");
       return;
     }
-    await fetchData(lat, lng, fetchYear);
-    if (!init) {
-      setInit(true);
+
+    // Show a loading notification
+    const loadingToast = toast.loading("Loading data...");
+
+    try {
+      await fetchData(lat, lng, fetchYear);
+
+      // Update the loading notification with success
+      toast.success("Data loaded successfully!", { id: loadingToast });
+
+      if (!init) {
+        setInit(true);
+      }
+
+      // Update the previous lat and lng values
+      setPrevLat(lat);
+      setPrevLng(lng);
+    } catch (error) {
+      // Update the loading notification with an error
+      toast.error("Error loading data.", { id: loadingToast });
     }
   };
 
   return (
     <div className="data-page flex h-full w-screen flex-col items-center justify-center gap-10 px-10 pt-20 pb-10">
+      <Toaster />
       <div className="data-title flex w-full flex-col items-center justify-center rounded-lg bg-white p-4 shadow-md">
         <h1 className="relative text-3xl font-bold">
           Select a location on the map to load the corresponding data.

@@ -65,7 +65,7 @@ export const DataGraph: React.FC = () => {
     xAxis: {
       categories: processedData.map((item) => item[0]),
       title: {
-        text: "fetchYear",
+        text: "Year",
       },
     },
     yAxis: {

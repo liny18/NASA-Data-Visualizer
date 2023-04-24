@@ -9,7 +9,8 @@ type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
-  const isDataPage = location.pathname === "/data";
+  const isDataPage =
+    location.pathname === "/data" || location.pathname === "/about";
 
   return (
     <div

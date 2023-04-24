@@ -46,20 +46,6 @@ export const NavBar = () => {
           </button>
         </NavLink>
       </div>
-      <div className="nav-item">
-        <NavLink
-          to="/help"
-          className={({ isActive }) =>
-            `border-t-2 pt-1 font-extrabold ${
-              isActive ? "border-red-300 text-red-300" : "border-red-300"
-            }`
-          }
-        >
-          <button>
-            <h1>HELP</h1>
-          </button>
-        </NavLink>
-      </div>
     </div>
   );
 };
