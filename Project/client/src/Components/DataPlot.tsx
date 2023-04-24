@@ -65,7 +65,7 @@ export const DataPlot = () => {
     },
     xAxis: {
       title: {
-        text: "Wind Direction (degrees)",
+        text: "Wind Direction (degrees North)",
       },
     },
     yAxis: {
@@ -101,7 +101,7 @@ export const DataPlot = () => {
         },
         tooltip: {
           headerFormat: "<b>{series.name}</b><br>",
-          pointFormat: "{point.x} degrees, {point.y} m/s",
+          pointFormat: "{point.x}° N, {point.y} m/s",
         },
       },
     },

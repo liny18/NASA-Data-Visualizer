@@ -38,8 +38,8 @@ export const Hero = () => {
             Historical Wind Data In Connecticut
           </h1>
         </div>
-        <p className="mb-1">Avg Wind Speed: 5.2 m/s</p>
-        <p className="mb-1">Avg Temperature: 20.2 C</p>
+        <p className="mb-1">Avg Wind Speed: 4.5 m/s</p>
+        <p className="mb-1">Avg Wind Direction: 247.5° N</p>
       </div>
     </div>
   );

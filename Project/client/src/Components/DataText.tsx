@@ -49,7 +49,7 @@ export const DataText = () => {
                 Avg Wind Speed: {avgData.wsAvg.toFixed(2)} m/s
               </p>
               <p className="DataText__subtitle text-black">
-                Avg Wind Direction: {avgData.wdAvg.toFixed(2)}°
+                Avg Wind Direction: {avgData.wdAvg.toFixed(2)}° N
               </p>
             </div>
           </div>
@@ -64,5 +64,3 @@ export const DataText = () => {
     </div>
   );
 };
-
-export default DataText;
