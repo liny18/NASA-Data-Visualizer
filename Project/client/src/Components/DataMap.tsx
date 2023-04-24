@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import { useData } from "../Pages/Data";
 
-mapboxgl.accessToken = import.meta.env.VITE_APP_MAP_TOKEN as string;
+mapboxgl.accessToken = process.env.VITE_APP_MAP_TOKEN as string;
 
 export const DataMap = () => {
   const { setLat, setLng } = useData();
