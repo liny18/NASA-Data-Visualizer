@@ -50,9 +50,8 @@ export const DataMap = () => {
 
   return (
     <div className="data-map col-span-2 h-full rounded-3xl border-2 border-emerald-200 bg-emerald-100 p-2 shadow-[6px_6px_2px_0px_#6ee7b7]">
-      <div className="relative h-full min-w-0">
+      <div className="relative h-full min-h-[300px]">
         {" "}
-        {/* Add the min-w-0 class here */}
         <div
           id="map"
           className="map-container absolute h-full w-full rounded-xl"

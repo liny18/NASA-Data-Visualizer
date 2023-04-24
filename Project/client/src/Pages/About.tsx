@@ -4,7 +4,7 @@ import mission from "../assets/undraw_our_solution_re_8yk6 (1).svg";
 
 export const About = () => {
   return (
-    <div className="about-container h-full min-h-screen w-full bg-gray-100 px-8 pt-20 pb-10">
+    <div className="about-container mb-5 h-full min-h-screen w-full rounded-xl border border-gray-200 bg-gray-100 px-8 pt-20 pb-10">
       <div className="about-title mb-12 w-full text-center">
         <h1 className="text-4xl font-bold text-gray-800">
           About FluffyBarnacles
@@ -12,7 +12,7 @@ export const About = () => {
       </div>
       <div className="about-content mx-auto max-w-4xl">
         <div className="about-item mb-8 flex flex-col items-center justify-center gap-6 md:flex-row">
-          <div className="about-item-image w-full overflow-hidden rounded-lg shadow-lg md:w-1/2">
+          <div className="about-item-image w-full overflow-hidden rounded-lg border border-gray-200 shadow-lg md:w-1/2">
             <img src={mission} alt="mission" className="w-full" />
           </div>
           <div className="about-item-text w-full rounded-lg bg-gradient-to-r from-green-200 to-blue-200 p-6 px-4 shadow-lg md:w-1/2">
@@ -47,7 +47,7 @@ export const About = () => {
               energy sources.
             </p>
           </div>
-          <div className="about-item-image w-full overflow-hidden rounded-lg shadow-lg md:w-1/2">
+          <div className="about-item-image w-full overflow-hidden rounded-lg border border-gray-200 shadow-lg md:w-1/2">
             <img src={team} alt="team" className="w-full" />
           </div>
         </div>
