@@ -1,15 +1,18 @@
+require('dotenv').config();
 const axios = require('axios');
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const express = require('express');
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
+
 const port = process.env.PORT || 3000;
-const GEOCODING_API_KEY = '8a44d4ca25a10c31120e4a6965fdb0d0';
+const GEOCODING_API_KEY = process.env.GEOCODING_API_KEY;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use(express.json());
 
-const uri =
-    'mongodb+srv://admin:admin@cluster0.5stqqzx.mongodb.net/?retryWrites=true&w=majority';
-const client = new MongoClient(uri, {
+app.use('/final', express.static('../client/dist'));
+
+const client = new MongoClient(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverApi: ServerApiVersion.v1,

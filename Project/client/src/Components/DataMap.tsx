@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { useData } from "../Pages/Data";
 
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoic3ZlbWJlbmlsIiwiYSI6ImNsZ2dvOXhncjAwbmEzbHBicmc0ODI2YnEifQ.QpodPFhI-Vibl_DVqwDjUQ";
+mapboxgl.accessToken = import.meta.env.VITE_APP_MAP_TOKEN as string;
 
 export const DataMap = () => {
   const { setLat, setLng } = useData();
@@ -51,7 +50,9 @@ export const DataMap = () => {
 
   return (
     <div className="data-map col-span-2 h-full rounded-3xl border-2 border-emerald-200 bg-emerald-100 p-2 shadow-[6px_6px_2px_0px_#6ee7b7]">
-      <div className="relative h-full">
+      <div className="relative h-full min-w-0">
+        {" "}
+        {/* Add the min-w-0 class here */}
         <div
           id="map"
           className="map-container absolute h-full w-full rounded-xl"
@@ -60,4 +61,3 @@ export const DataMap = () => {
     </div>
   );
 };
-export default DataMap;
