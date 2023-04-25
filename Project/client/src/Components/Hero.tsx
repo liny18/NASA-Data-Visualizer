@@ -11,8 +11,8 @@ export const Hero = () => {
           Explore Wind Energy Potential in Connecticut
         </h1>
         <p className="text-center text-lg md:text-left">
-          Our website helps you visualize the wind pattern and temperature of
-          locations in Connecticut, powered by <br />
+          Our website helps you visualize the wind pattern of towns and cities
+          in Connecticut, powered by <br />
           <a
             className="rounded-3xl border-2 border-orange-200 bg-orange-100 p-2 font-semibold italic underline shadow-[5px_5px_2px_0px_#fdba74] hover:bg-orange-200"
             href="https://power.larc.nasa.gov/"
