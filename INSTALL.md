@@ -1,6 +1,6 @@
-Vite + MERN Stack Project Installation Guide
+Project Installation Guide
 
-This guide will help you set up a Vite + MERN (MongoDB, Express, React, Node.js) stack project. Follow the steps below to successfully install and configure your project.
+This guide will help you set up a Vite + MERN (MongoDB, Express, React, Node.js) environment. Follow the steps below to successfully install and configure the project.
 
 Prerequisites:
 Ensure you have the following software installed on your system:
